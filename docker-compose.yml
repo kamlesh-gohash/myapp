@@ -29,12 +29,13 @@ services:
       - "6379:6379"
     restart: unless-stopped
 
-  pgadmin:
+    pgadmin:
     image: dpage/pgadmin4
     container_name: myapp_pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@myapp.com
       PGADMIN_DEFAULT_PASSWORD: adminpassword
+      PGADMIN_CONFIG_SCRIPT_NAME: "/pgadmin"   # <-- Add this line
     ports:
       - "8080:80"
     restart: unless-stopped
