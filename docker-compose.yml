@@ -37,6 +37,7 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@myapp.com
       PGADMIN_DEFAULT_PASSWORD: adminpassword
+      PGADMIN_CONFIG_SCRIPT_NAME: "/pgadmin"
     ports:
       - "8080:80"
     restart: unless-stopped
