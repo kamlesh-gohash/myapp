@@ -41,6 +41,7 @@ services:
       PGADMIN_CONFIG_SCRIPT_NAME: "/pgadmin"
     ports:
       - "8080:80"
+     expose: []
     restart: unless-stopped
     depends_on:
       - postgres
