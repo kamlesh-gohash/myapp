@@ -1,46 +1,47 @@
-version: '3.8'
+version: "3.8"
 
 services:
+  nodeapp:
+    build: .
+    container_name: myapp_node
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - redis
+
   postgres:
     image: postgres:15
     container_name: myapp_postgres
     environment:
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: mydb
-    ports:
-      - "5432:5432"
+      POSTGRES_DB: myappdb
     volumes:
       - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
 
   redis:
     image: redis:7
     container_name: myapp_redis
     ports:
       - "6379:6379"
-
-  node:
-    build: ./nodeapp  # Make sure your Node.js app has a Dockerfile
-    container_name: myapp_node
-    ports:
-      - "3000:3000"
-    depends_on:
-      - postgres
-      - redis
-    environment:
-      DB_HOST: postgres
-      DB_USER: myuser
-      DB_PASS: mypassword
-      REDIS_HOST: redis
+    restart: unless-stopped
 
   pgadmin:
     image: dpage/pgadmin4
     container_name: myapp_pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com
-      PGADMIN_DEFAULT_PASSWORD: admin123
+      PGADMIN_DEFAULT_EMAIL: admin@myapp.com
+      PGADMIN_DEFAULT_PASSWORD: adminpassword
+      PGADMIN_CONFIG_SERVER_MODE: "True"
+      PGADMIN_CONFIG_SCRIPT_NAME: "/pgadmin"
     ports:
       - "8080:80"
+    restart: unless-stopped
     depends_on:
       - postgres
 
