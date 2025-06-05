@@ -38,16 +38,11 @@ services:
       PGADMIN_DEFAULT_EMAIL: admin@myapp.com
       PGADMIN_DEFAULT_PASSWORD: adminpassword
       PGADMIN_CONFIG_SERVER_MODE: "True"
-      PGADMIN_ENABLE_TLS: "true"
-      PGADMIN_TLS_CERT: /certs/server.cert
-      PGADMIN_TLS_KEY: /certs/server.key
-    volumes:
-      - ./certs:/certs
+      PGADMIN_ENABLE_TLS: "false"
     ports:
       - "8080:80"
     restart: unless-stopped
     depends_on:
       - postgres
-
 volumes:
   pgdata:
