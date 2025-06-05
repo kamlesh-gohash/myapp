@@ -4,9 +4,9 @@ services:
   nodeapp:
     build: .
     container_name: myapp_node
-    ports:
-      - "3000:3000"
     restart: unless-stopped
+    expose:
+      - "3000"
     depends_on:
       - postgres
       - redis
@@ -14,36 +14,37 @@ services:
   postgres:
     image: postgres:15
     container_name: myapp_postgres
+    restart: unless-stopped
     environment:
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: mypassword
       POSTGRES_DB: myappdb
     volumes:
       - pgdata:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    restart: unless-stopped
 
   redis:
     image: redis:7
     container_name: myapp_redis
-    ports:
-      - "6379:6379"
     restart: unless-stopped
 
   pgadmin:
     image: dpage/pgadmin4
     container_name: myapp_pgadmin
+    restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@myapp.com
       PGADMIN_DEFAULT_PASSWORD: adminpassword
       PGADMIN_CONFIG_SERVER_MODE: "True"
       PGADMIN_CONFIG_SCRIPT_NAME: "/pgadmin"
-    ports:
-      - "8080:80"
-    restart: unless-stopped
+    expose:
+      - "80"
     depends_on:
       - postgres
 
 volumes:
   pgdata:
+
+networks:
+  default:
+    external:
+      name: myapp-network
