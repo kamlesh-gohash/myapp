@@ -1,4 +1,4 @@
-version: "3.8"More actions
+version: "3.8"
 
 services:
   nodeapp:
@@ -35,13 +35,10 @@ services:
     image: dpage/pgadmin4
     container_name: myapp_pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com
-      PGADMIN_DEFAULT_PASSWORD: admin123
       PGADMIN_DEFAULT_EMAIL: admin@myapp.com
       PGADMIN_DEFAULT_PASSWORD: adminpassword
       PGADMIN_CONFIG_SERVER_MODE: "True"
       PGADMIN_CONFIG_SCRIPT_NAME: "/pgadmin"
-
     ports:
       - "8080:80"
     restart: unless-stopped
